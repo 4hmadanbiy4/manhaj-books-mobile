@@ -53,8 +53,8 @@ dengan command flutter create manhaj_books
 - mencoba menjalankan program manhaj_books di device android saya sendiri dengan mengaktifkan developer options pada android device dan memasang kabel yang menyatukan device android dengan laptop
 - membuat widget berupa 3 button yaitu LihatDaftarProduk(beserta icon bawaan), TambahProduk(beserta icon bawaan), Logout(beserta icon bawaan), berikut adalah design beserta code dari ketiga button, yang sudah mengimplementasi fungsi showSnackbar:
 
+![alt text](button_3.png)
 
-![button design](image.png)
 
 ```dart
 children: <Widget>[
