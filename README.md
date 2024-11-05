@@ -1,54 +1,57 @@
 # manhaj_books
 
-## 1. Stateless Widget vs. Stateful Widget
-### What are Stateless and Stateful Widgets?
-- **Stateless Widget**: A widget that does not maintain any state. It renders only once and cannot update itself during runtime. Ideal for static content that doesn’t change, such as text or images.
-- **Stateful Widget**: A widget that can maintain and update its state over time. It is dynamic and can respond to user interaction or other runtime changes.
+## 1. Widget Stateless vs. Widget Stateful
+### Apa Itu Widget Stateless dan Stateful?
+- **Stateless Widget**: Widget yang tidak mempertahankan state apa pun. Widget ini hanya di-render sekali dan tidak dapat diperbarui selama runtime. Ideal untuk konten statis yang tidak berubah, seperti teks atau gambar.
+- **Stateful Widget**: Widget yang dapat mempertahankan dan memperbarui state-nya seiring waktu. Widget ini dinamis dan dapat merespons interaksi pengguna atau perubahan lainnya selama runtime.
 
-### Difference Between Stateless and Stateful Widgets
-| Type               | Description                                                                                             | Use Cases                              |
-|--------------------|---------------------------------------------------------------------------------------------------------|----------------------------------------|
-| **Stateless**      | Does not change over time; the UI is immutable after being built.                                       | Static screens, icons, labels          |
-| **Stateful**       | Can update its appearance dynamically; the UI can change in response to internal state or user actions. | Forms, animations, dynamic content     |
-
----
-
-## 2. Widgets Used in This Project
-### List of Widgets and Their Functions
-- **Text**: Used to display simple text on the screen.
-- **Container**: A versatile widget for adding padding, margins, borders, and colors.
-- **Row and Column**: Used to arrange child widgets in horizontal or vertical alignments.
-- **ListView**: Allows scrolling through a list of items.
-- **Button Widgets (e.g., ElevatedButton)**: For interactive elements that users can click.
-
-Each widget is carefully chosen to ensure an optimal user experience and functionality.
+### Perbedaan Antara Stateless dan Stateful Widget
+| Jenis               | Deskripsi                                                                                             | Contoh Penggunaan                      |
+|---------------------|-------------------------------------------------------------------------------------------------------|----------------------------------------|
+| **Stateless**       | Tidak berubah seiring waktu; UI bersifat tetap setelah dibangun.                                       | Layar statis, ikon, label              |
+| **Stateful**        | Dapat memperbarui tampilannya secara dinamis; UI dapat berubah sesuai state internal atau aksi pengguna. | Formulir, animasi, konten dinamis      |
 
 ---
 
-## 3. The `setState()` Function
-### Purpose of `setState()`
-The `setState()` function is used to update the UI by triggering a rebuild of the widget. When state changes, `setState()` ensures that the widget reflects the latest data or state.
+## 2. Widget yang Digunakan dalam Proyek Ini
+### Daftar Widget dan Fungsinya
+- **Text**: Digunakan untuk menampilkan teks sederhana di layar.
+- **Container**: Widget serbaguna untuk menambahkan padding, margin, border, dan warna.
+- **Row dan Column**: Digunakan untuk mengatur widget anak secara horizontal atau vertikal.
+- **ListView**: Memungkinkan pengguna untuk menggulir daftar item.
+- **Button Widgets (misalnya, ElevatedButton)**: Untuk elemen interaktif yang dapat diklik oleh pengguna.
 
-### Variables Affected by `setState()`
-Any variable used to maintain state within a **StatefulWidget** can be impacted by `setState()`. Common examples include counters, form data, or any data that can change during the widget's lifecycle.
+Setiap widget dipilih dengan hati-hati untuk memastikan pengalaman pengguna yang optimal dan fungsionalitas yang baik.
 
 ---
 
-## 4. Difference Between `const` and `final`
-| Keyword  | Description                                                                                       |
-|----------|---------------------------------------------------------------------------------------------------|
-| **const** | Immutable at compile-time. Used for values that are known at compile time and do not change.      |
-| **final** | Immutable after being set once. Used for values determined at runtime but should remain constant. |
+## 3. Fungsi `setState()`
+### Tujuan `setState()`
+Fungsi `setState()` digunakan untuk memperbarui UI dengan memicu widget untuk di-render ulang. Ketika ada perubahan state, `setState()` memastikan bahwa widget mencerminkan data atau state terbaru.
 
-**Example**:
+### Variabel yang Dipengaruhi oleh `setState()`
+Variabel apa pun yang digunakan untuk mempertahankan state dalam **StatefulWidget** dapat dipengaruhi oleh `setState()`. Contoh umum termasuk penghitung, data formulir, atau data apa pun yang dapat berubah selama siklus hidup widget.
+
+---
+
+## 4. Perbedaan Antara `const` dan `final`
+| Kata Kunci | Deskripsi                                                                                         |
+|------------|---------------------------------------------------------------------------------------------------|
+| **const**  | Tetap di waktu kompilasi. Digunakan untuk nilai yang diketahui di waktu kompilasi dan tidak berubah.      |
+| **final**  | Tetap setelah diatur sekali. Digunakan untuk nilai yang ditentukan di waktu runtime tetapi tetap konstan. |
+
+**Contoh**:
 ```dart
-const pi = 3.14; // Constant known at compile-time
-final currentTime = DateTime.now(); // Set once at runtime, remains constant
+const pi = 3.14; // Konstanta yang diketahui di waktu kompilasi
+final currentTime = DateTime.now(); // Diatur sekali di waktu runtime, tetap konstan
 ```
 ## 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist-checklist di atas.
 
 - saya membuat program Flutter baru sesuai tugas web pada saat sebelum UTS yaitu manhaj-books
-dengan command flutter create manhaj_books
+dengan command :
+```bash
+flutter create manhaj_books
+```
 
 - mencoba menjalankan program manhaj_books di device android saya sendiri dengan mengaktifkan developer options pada android device dan memasang kabel yang menyatukan device android dengan laptop
 - membuat widget berupa 3 button yaitu LihatDaftarProduk(beserta icon bawaan), TambahProduk(beserta icon bawaan), Logout(beserta icon bawaan), berikut adalah design beserta code dari ketiga button, yang sudah mengimplementasi fungsi showSnackbar:
