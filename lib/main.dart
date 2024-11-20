@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:manhaj_books/screens/list_reservation.dart';
+import 'package:manhaj_books/screens/login.dart';
+import 'package:manhaj_books/screens/res_form.dart';
+import 'package:manhaj_books/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +15,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+      child: MaterialApp(
       title: 'Manhaj Books',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xF1F3C2)),
@@ -23,22 +34,15 @@ class MyApp extends StatelessWidget {
           ),
         )
       ),
-      home: const HomePage(title: 'Manhaj Books'),
+      home: const LoginPage(),
+      ),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
-  final String title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  // Fungsi untuk menampilkan Snackbar dengan tampilan lebih menarik
   void showSnackbar(BuildContext context, String message, IconData icon) {
     final snackBar = SnackBar(
       content: Row(
@@ -78,44 +82,25 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFA1D6B2),
-        title: Text(widget.title),
+        title: Text('Manhaj Books'),
+        titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'EagleLake',
+          ),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFFA1D6B2),
-              ),
-              child: Text('Menu', style: TextStyle(
-                  color: Colors.white, fontSize: 24
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Halaman Utama'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Tambah Item'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const AddItemPage()));
-              },
-            ),
-          ],
-        )
-      ),
+      drawer: const LeftDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton.icon(
               onPressed: () {
-                showSnackbar(context, 'Kamu telah menekan tombol Lihat Daftar Produk', Icons.list);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ReservationPage()),
+                  );
               },
               icon: Icon(Icons.list),
               label: Text('Lihat Daftar Produk'),
@@ -127,7 +112,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 16.0),
             ElevatedButton.icon(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const AddItemPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReservationFormPage()));
               },
               icon: Icon(Icons.add),
               label: Text('Tambah Produk'),
@@ -155,147 +140,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class AddItemPage extends StatefulWidget {
-  const AddItemPage({super.key});
-
-  @override
-  _AddItemPageState createState() => _AddItemPageState();
-}
-
-class _AddItemPageState extends State<AddItemPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _bookTitleController = TextEditingController();
-  // final _amountController = TextEditingController();
-  double _amount = 1;
-  final _descriptionController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Tambah Item'),
-        backgroundColor: Color(0xFFA1D6B2),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name(Customer)'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'nama pelanggan tidak boleh kosong';
-                  }
-                  else if(RegExp(r'[0-9]').hasMatch(value)){
-                    return 'Nama harus tidak mengandung angka';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _bookTitleController,
-                decoration: InputDecoration(labelText: 'Book title'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'judul buku boleh kosong';
-                  }
-                  else if(RegExp(r'[0-9]').hasMatch(value)){
-                    return 'Nama harus tidak mengandung angka';
-                  }
-                  return null;
-                },
-              ),
-              // TextFormField(
-              //   controller: _amountController,
-              //   decoration: InputDecoration(labelText: 'Amount'),
-              //   keyboardType: TextInputType.number,
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Amount tidak boleh kosong';
-              //     }
-              //     final n = num.tryParse(value);
-              //     if (RegExp(r'[A-Z, a-z]').hasMatch(value)){
-              //       return 'input harus berupa angka';
-              //     }
-              //     if (n == null || n <= 0) {
-              //       return 'Amount harus angka positif';
-              //     }
-              //     return null;
-              //   },
-              // ),
-              TextFormField(
-                controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Description tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 20),
-              Text('Amount: ${_amount.round()}'),
-              Slider(
-                value: _amount,
-                min: 1,
-                max: 10,
-                divisions: 9,
-                label: _amount.round().toString(),
-                onChanged: (double value) {
-                  setState(() {
-                    _amount = value;
-                  });
-                },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Item Detail'),
-                          content: Text(
-                            'Name: ${_nameController.text}\n'
-                            'Book title: ${_bookTitleController.text}\n'
-                            'Amount: ${_amount.round()}\n'
-                            'Description: ${_descriptionController.text}',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFCEDF9F)
-                ),
-                child: Text('Save'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _bookTitleController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
-}
+// class _HomePageState extends State<HomePage> {
+//   // Fungsi untuk menampilkan Snackbar dengan tampilan lebih menarik
+// }
